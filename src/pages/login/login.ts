@@ -19,7 +19,7 @@ export class LoginPage {
   }
 
   goToSignUp(){
-    this.navCtrl.push(SignupPage)
+    this.navCtrl.push(SignupPage);
   }
 
 }
