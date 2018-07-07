@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {  NavController, NavParams } from 'ionic-angular';
 import { User } from '../../user-model';
+import { Http, Headers } from '@angular/http';
 
 
-@IonicPage()
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html',
@@ -26,5 +26,7 @@ export class SignupPage {
   goToLogin(){
     this.navCtrl.pop()
   }
+
+  
 
 }
