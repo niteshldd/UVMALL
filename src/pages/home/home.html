@@ -1,6 +1,11 @@
 <ion-header>
     <ion-navbar >
         <ion-title>UV MALL</ion-title>
+        <button  ion-button left >  
+                <button ion-button icon-only (click)="logout()">
+                       <ion-icon name="exit"></ion-icon>
+                </button>
+            </button> 
     </ion-navbar>
 </ion-header>
 <!-- manual refersh using ionic feature -->
@@ -28,7 +33,7 @@
         <button ion-button icon-only color="secondary" (click)="editFriend(friend)" >
             <ion-icon name="create"></ion-icon>
         </button>
-        <button color="danger" ion-button icon-only >
+        <button color="danger" ion-button icon-only (click)="deleteFriend(friend)" >
             <ion-icon name="trash"></ion-icon>
         </button>
     </ion-item-options>

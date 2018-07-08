@@ -1,3 +1,4 @@
+import { LoginPage } from './../login/login';
 import { Component } from '@angular/core';
 import { NavController , AlertController} from 'ionic-angular';
 import { Http, Headers} from '@angular/http';
@@ -150,5 +151,49 @@ export class HomePage {
         }
       }]
     }).present();
+  }
+  deleteFriend(friend){
+    this.alertCtrl.create({
+      title:"Delete Friend",
+      message: "Are you sure?",
+      buttons:[{
+        text: "No"},
+        {     
+        text: "Yes(Delete)",
+        handler: () => {
+          //perform update on parse server here
+          this.url = "http://ec2-34-219-71-164.us-west-2.compute.amazonaws.com:9000/app1/classes/friendslist/" + friend.objectId;
+
+          this.http.delete(this.url, {headers: this.headers}).map(res => res.json()).subscribe(
+            res => {
+              console.log(res);
+              this.alertCtrl
+              .create({title: "Success", message: "Friend Deleted successfully.", buttons:[{
+                text: 'OK',
+                handler: ()=>{
+                  this.getFriends(null);
+                }
+              }]}).present();
+
+            },
+            err => {
+              console.log(err);
+              this.alertCtrl
+              .create({title: "Error", message:err.text(),buttons:[{
+                text: 'OK',
+              }]})
+              .present();
+
+            }
+          )
+        }
+      }]
+    }).present();
+  }
+  //logout and send back to login page with root option 
+  logout(){
+    this.localStorage.remove('user').then(()=>{
+      this.navCtrl.setRoot(LoginPage);
+    });
   }
 }
