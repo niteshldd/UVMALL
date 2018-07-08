@@ -3,6 +3,7 @@ import { NavController , AlertController} from 'ionic-angular';
 import { Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
+import { nullSafeIsEquivalent } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'page-home',
@@ -23,7 +24,7 @@ export class HomePage {
 
     this.localStorage.get('user').then((value) => {
       this.userId = value;
-      this.getFriends()
+      this.getFriends(null)
     })
     
 
@@ -60,7 +61,7 @@ export class HomePage {
                 buttons : [{
                   text: "OK",
                   handler: ()=>{
-                    this.getFriends();
+                    this.getFriends(null);
                   }
                 }]
               }).present();
@@ -83,12 +84,15 @@ export class HomePage {
     }).present();
 
   }
-  getFriends(){
+  getFriends(refresher){
     this.url = 'http://ec2-34-219-71-164.us-west-2.compute.amazonaws.com:9000/app1/classes/friendslist?where={"owner": "'+ this.userId+ '" }';
     this.http.get(this.url, {headers: this.headers}).map(res => res.json() ).subscribe(res => {
       console.log(res);
       //need to restrict access to data in server also and confirm here 
       this.friends = res.results;
+      if(refresher !== null)
+      refresher.complete();
+
     },err => {
       this.alertCtrl
       .create({title : "Error", message: err.text(), buttons: [{
