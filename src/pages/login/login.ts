@@ -1,9 +1,11 @@
+import { HomePage } from './../home/home';
 import { Component } from '@angular/core';
 import {  NavController, NavParams, AlertController } from 'ionic-angular';
 import { User } from '../../user-model';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { SignupPage } from '../signup/signup';
+
 
 
 @Component({
@@ -46,6 +48,7 @@ export class LoginPage {
     this.http.get(this.url, {headers: this.headers}).subscribe(res=>{
       console.log(res);
       //Navigate the user to main app page
+      this.navCtrl.setRoot(HomePage)
     }, err => {
       console.log(err);
     })
