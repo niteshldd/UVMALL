@@ -10,12 +10,15 @@ export class HomePage {
 
   url: string;
   headers: Headers;
+  friends: any[];
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, public http: Http) {
     this.headers = new Headers();
     this.headers.append("X-Parse-Application-Id","AppId1");
     this.headers.append("X-Parse-REST-API-Key","restAPIKey");
     this.headers.append("X-Parse-Revocable-Session","1");
+    this.getFriends()
+
 
   }
 
@@ -72,5 +75,16 @@ export class HomePage {
     }).present();
 
   }
-
+  getFriends(){
+    this.url = "http://ec2-34-219-71-164.us-west-2.compute.amazonaws.com:9000/app1/classes/friendslist"
+    this.http.get(this.url, {headers: this.headers}).map(res => res.json() ).subscribe(res => {
+      console.log(res);
+      this.friends = res.results;
+    },err => {
+      this.alertCtrl
+      .create({title : "Error", message: err.text(), buttons: [{
+        text : 'OK',
+      }]}).present();
+    })
+  }
 }

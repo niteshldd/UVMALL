@@ -10,4 +10,24 @@
         <ion-icon name="add"></ion-icon>
     </button>
 </ion-fab>
+<ion-list >
+    <ion-item-sliding *ngFor="let friend of friends" >
+    <ion-item >
+        <ion-avatar item-left>
+            <img src="https://www.uruvelaa.com/Creative%20Tim%20_%20Tools%20to%20build%20better%20websites_files/nitesh.jpg"/>
+        </ion-avatar>
+        <h2>{{friend.name}}</h2>
+        <h3>{{friend.email}}</h3>
+        <p>{{friend.number}}</p>
+    </ion-item>
+    <ion-item-options side="right">
+        <button ion-button icon-only color="secondary">
+            <ion-icon name="create"></ion-icon>
+        </button>
+        <button color="danger" ion-button icon-only >
+            <ion-icon name="trash"></ion-icon>
+        </button>
+    </ion-item-options>
+</ion-item-sliding>
+</ion-list>
 </ion-content>
