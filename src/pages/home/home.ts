@@ -60,7 +60,7 @@ export class HomePage {
                 buttons : [{
                   text: "OK",
                   handler: ()=>{
-
+                    this.getFriends();
                   }
                 }]
               }).present();
