@@ -49,9 +49,23 @@ export class SignupPage {
     .map(res => res.json())
     .subscribe(res =>{
       console.log(res);
+      this.alterCtrl
+      .create ({title : "Success", message: "Congratulations. Accounts has been create. Please login,", buttons:[{
+        text : "Login",
+        handler: () => {
+          this.navCtrl.pop();
+        }
+      }] })
+      .present();
     },
   err => {
     console.log(err);
+    this.alterCtrl.create({
+      title: "Error",
+      message: err.text(),
+      buttons: [{text : 'OK' 
+    }]
+    }).present();
   })
 
   }
