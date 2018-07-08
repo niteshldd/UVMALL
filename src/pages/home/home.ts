@@ -3,7 +3,6 @@ import { NavController , AlertController} from 'ionic-angular';
 import { Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
-import { nullSafeIsEquivalent } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'page-home',
@@ -99,5 +98,57 @@ export class HomePage {
         text : 'OK',
       }]}).present();
     })
+  }
+
+  editFriend(friend){
+    this.alertCtrl.create({
+      title:"Edit Friend",
+      message: "Edit your information here",
+        inputs : [{
+          name: 'name',
+          placeholder: 'Enter the name',
+          value: friend.name
+        },{
+          name: 'email',
+          placeholder: 'Enter the email',
+          value: friend.email
+        },{
+          name: 'number',
+          placeholder: 'Enter the number',
+          value: friend.number
+      }],
+      buttons:[{
+        text: "Cancel"},
+        {     
+        text: "Save",
+        handler: data => {
+          //perform update on parse server here
+          this.url = "http://ec2-34-219-71-164.us-west-2.compute.amazonaws.com:9000/app1/classes/friendslist/" + friend.objectId;
+
+          this.http.put(this.url,{name: data.name,email: data.email, number: data.number, }, {headers: this.headers}).map(res => res.json()).subscribe(
+            res => {
+              console.log(res);
+              this.alertCtrl
+              .create({title: "Success", message: "Contact saved successfully.", buttons:[{
+                text: 'OK',
+                handler: ()=>{
+                  this.getFriends(null);
+                }
+              }]}).present();
+
+            },
+            err => {
+              console.log(err);
+              this.alertCtrl
+              .create({title: "Error", message:err.text(),buttons:[{
+                text: 'OK',
+              }]})
+              .present();
+
+            }
+          )
+        }
+      }]
+    }).present();
   }
 }

@@ -25,7 +25,7 @@
         <p>{{friend.number}}</p>
     </ion-item>
     <ion-item-options side="right">
-        <button ion-button icon-only color="secondary">
+        <button ion-button icon-only color="secondary" (click)="editFriend(friend)" >
             <ion-icon name="create"></ion-icon>
         </button>
         <button color="danger" ion-button icon-only >
